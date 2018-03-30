@@ -1,0 +1,24 @@
+{% extends "polls/_header.html" %}
+
+{% block content %}
+    <div class="card grey lighten-3">
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            <div class="card-content">
+                <div class="card-title">{{ question.question_text }}</div>
+                {% for choice in question.choice_set.all %}
+                    <label for="choice-{{ forloop.counter }}">
+                        <input type="radio" name="choice" class="with-gap" id="choice-{{ forloop.counter }}"
+                               value="{{ choice.id }}" {% if forloop.first %} checked="checked" {% endif %}/>
+                        <span>{{ choice.choice_text }}</span>
+                    </label> <br>
+                {% endfor %}
+
+            </div>
+            <div class="card-action">
+                <button type="submit" class="btn waves-effect waves-light white-text blue darken-1">Vote</button>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

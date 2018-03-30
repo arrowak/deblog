@@ -1,0 +1,13 @@
+{% extends 'polls/_header.html' %}
+
+{% block content %}
+    {% if last_five_questions %}
+        <ul class="collection">
+            {% for question in last_five_questions %}
+                <li class="collection-item">
+                    <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
